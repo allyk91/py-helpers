@@ -1,7 +1,7 @@
 from tofupy import Tofu
 import os
 
-def main(terraform_dir: str):
+def test_terraform(terraform_dir: str):
     print("Testing terraform..")
     workspace = Tofu(
         cwd=(terraform_dir),
