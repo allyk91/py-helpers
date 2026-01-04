@@ -1,0 +1,8 @@
+---
+region: eu-west-2
+custom:
+  - first
+  - second
+customNum:
+  - 1
+  - 2

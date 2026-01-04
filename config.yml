@@ -1,0 +1,7 @@
+name: my deploy
+memlimit: 500m
+projectCode: PROJ_OVERWRITE
+custom:
+  - third
+# customNum:
+#   - 3
