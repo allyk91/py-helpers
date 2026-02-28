@@ -1,10 +1,11 @@
 from tofupy import Tofu
+from pathlib import Path
 
 
 def apply_terraform(
     terraform_dir: str,
     terraform_vars: dict[str, str] | None = None,
-    backend_path: str | None = None,
+    backend_path: Path | None = None,
     extra_args: list[str] | None = None,
 ):
     print("Deploying terraform..")
