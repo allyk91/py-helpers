@@ -5,6 +5,7 @@ def apply_terraform(
     terraform_dir: str,
     terraform_vars: dict[str, str] | None = None,
     backend_path: str | None = None,
+    extra_args: list[str] | None = None,
 ):
     print("Deploying terraform..")
     workspace = Tofu(
@@ -19,7 +20,7 @@ def apply_terraform(
         workspace.init()
 
     print("Running terraform apply..")
-    apply_results = workspace.apply(variables=terraform_vars or {})
+    apply_results = workspace.apply(variables=terraform_vars or {}, extra_args=extra_args or [])
 
     if apply_results.errors:
         print("Terraform apply failed!")
