@@ -7,6 +7,7 @@ def apply_terraform(
     terraform_vars: dict[str, str] | None = None,
     backend_path: Path | None = None,
     extra_args: list[str] | None = None,
+    plan_path: Path | None = None,
 ):
     print("Deploying terraform..")
     workspace = Tofu(
@@ -14,14 +15,22 @@ def apply_terraform(
         binary="terraform",
     )
 
-    print("Running terraform init..")
-    if backend_path:
-        workspace.init(backend_conf=backend_path)
-    else:
-        workspace.init()
+    if not plan_path:
+        print("Running terraform init..")
+        if backend_path:
+            workspace.init(backend_conf=backend_path)
+        else:
+            workspace.init()
 
-    print("Running terraform apply..")
-    apply_results = workspace.apply(variables=terraform_vars or {}, extra_args=extra_args or [])
+        print("Running terraform apply..")
+        apply_results = workspace.apply(variables=terraform_vars or {}, extra_args=extra_args or [])
+    else:
+        print("Running terraform apply with plan..")
+        apply_results = workspace.apply(
+            variables=terraform_vars or {},
+            extra_args=extra_args or [],
+            plan_file=plan_path,
+        )
 
     if apply_results.errors:
         print("Terraform apply failed!")
