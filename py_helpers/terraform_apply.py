@@ -1,7 +1,11 @@
 from tofupy import Tofu
 
 
-def apply_terraform(terraform_dir: str, terraform_vars: dict[str, str] | None = None):
+def apply_terraform(
+    terraform_dir: str,
+    terraform_vars: dict[str, str] | None = None,
+    backend_path: str | None = None,
+):
     print("Deploying terraform..")
     workspace = Tofu(
         cwd=(terraform_dir),
@@ -9,7 +13,10 @@ def apply_terraform(terraform_dir: str, terraform_vars: dict[str, str] | None = 
     )
 
     print("Running terraform init..")
-    workspace.init()
+    if backend_path:
+        workspace.init(backend_conf=backend_path)
+    else:
+        workspace.init()
 
     print("Running terraform apply..")
     apply_results = workspace.apply(variables=terraform_vars or {})
