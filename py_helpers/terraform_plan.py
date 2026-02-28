@@ -25,7 +25,7 @@ def plan_terraform(
     plan_log, plan_results = workspace.plan(
         variables=terraform_vars or {},
         extra_args=extra_args or [],
-        plan_path=plan_path,
+        plan_file=plan_path,
     )
 
     if plan_log.errors:
